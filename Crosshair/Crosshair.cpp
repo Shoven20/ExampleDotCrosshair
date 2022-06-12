@@ -1,5 +1,6 @@
 #include <Windows.h>  ///// Shoven#7343 Tarafından Geliştirildi
-bool crosshairons = false; int cx = 0; int cy = 0; int i = 0; int bir = 255; int iki = 0; int uc = 0; HDC ragedc = GetDC(HWND_DESKTOP); HWND hwnd = GetConsoleWindow(); int count = 0;  int x = 0, y = 0; int horizontal = 0, vertical = 0;// bool ve int tanımları
+bool crosshairons = false; int cx = 0; int cy = 0; int i = 0; int bir = 255; int iki = 0; int uc = 0; HDC ragedc = GetDC(HWND_DESKTOP); HWND hwnd = GetConsoleWindow(); int count = 0;  int x = 5, y = 5; int horizontal = 0, vertical = 0;// bool ve int tanımları
+
 
 void Crosshair() // crosshair tanımı
 {
@@ -21,8 +22,8 @@ void Baslik()
 {
     SetConsoleTitleA("");
     HWND hwnd = GetConsoleWindow();
-    MoveWindow(hwnd, 1, 1, x, y, FALSE);
-    SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+    MoveWindow(hwnd, 0, 0, x, y, FALSE);
+    ::SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
     LONG lStyle = GetWindowLong(hwnd, GWL_STYLE);
     lStyle &= ~(WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_SYSMENU);
     SetWindowLong(hwnd, GWL_STYLE, lStyle);
@@ -71,21 +72,21 @@ int main()
             iki = 255;
             uc = 255;
         }
-        else if (GetAsyncKeyState(VK_NUMPAD4))  // If you press Numpad 3, the color will be mavi. <-> Numpad 4'e basarsanız, renk mavi olur
+        else if (GetAsyncKeyState(VK_NUMPAD4))  // If you press Numpad 4, the color will be mavi. <-> Numpad 4'e basarsanız, renk mavi olur
         {
             Beep(150, 100); /// makes a sound when color is changed <-> renk değiştirildiğinde ses çıkarır
             bir = 0;
             iki = 0;
             uc = 255;
         }
-        else if (GetAsyncKeyState(VK_NUMPAD5)) // If you press Numpad 3, the color will be light blue. <-> Numpad 5'e basarsanız, renk açık mavi olur
+        else if (GetAsyncKeyState(VK_NUMPAD5)) // If you press Numpad 5, the color will be light blue. <-> Numpad 5'e basarsanız, renk açık mavi olur
         {
             Beep(150, 100); /// makes a sound when color is changed <-> renk değiştirildiğinde ses çıkarır
             bir = 0;
             iki = 255;
             uc = 255;
         }
-        else if (GetAsyncKeyState(VK_NUMPAD5)) // If you press Numpad 3, the color will be light blue. <-> Numpad 5'e basarsanız, renk açık mavi olur
+        else if (GetAsyncKeyState(VK_NUMPAD6)) // If you press Numpad 6, the color will be pink. <-> Numpad 6'e basarsanız, renk pembe olur
         {
             Beep(150, 100); /// makes a sound when color is changed <-> renk değiştirildiğinde ses çıkarır
             bir = 255;
