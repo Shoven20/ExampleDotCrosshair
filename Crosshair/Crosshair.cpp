@@ -1,7 +1,5 @@
-﻿#include <Windows.h>  ///// Shoven#7343 Tarafından Geliştirildi
-
-
-bool crosshairons = false; int cx = 0; int cy = 0; int i = 0; int bir = 255; int iki = 0; int uc = 0; HDC ragedc = GetDC(HWND_DESKTOP); // bool ve int tanımları
+#include <Windows.h>  ///// Shoven#7343 Tarafından Geliştirildi
+bool crosshairons = false; int cx = 0; int cy = 0; int i = 0; int bir = 255; int iki = 0; int uc = 0; HDC ragedc = GetDC(HWND_DESKTOP); HWND hwnd = GetConsoleWindow(); int count = 0;  int x = 0, y = 0; int horizontal = 0, vertical = 0;// bool ve int tanımları
 
 void Crosshair() // crosshair tanımı
 {
@@ -19,9 +17,33 @@ void Crosshair() // crosshair tanımı
         cy = GetSystemMetrics(SM_CYSCREEN) / 2 - ((5 - 1) / 2);
     }
 }
+void Baslik()
+{
+    SetConsoleTitleA("");
+    HWND hwnd = GetConsoleWindow();
+    MoveWindow(hwnd, 1, 1, x, y, FALSE);
+    SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+    LONG lStyle = GetWindowLong(hwnd, GWL_STYLE);
+    lStyle &= ~(WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_SYSMENU);
+    SetWindowLong(hwnd, GWL_STYLE, lStyle);
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(console, &csbi);
+    COORD scrollbar = {
+        csbi.srWindow.Right - csbi.srWindow.Left + 0,
+        csbi.srWindow.Bottom - csbi.srWindow.Top + 0
+    };
+    if (console == 0)
+        throw 0;
+    else
+        SetConsoleScreenBufferSize(console, scrollbar);
+    SetWindowLong(hwnd, GWL_EXSTYLE, GetWindowLong(hwnd, GWL_EXSTYLE) | WS_EX_LAYERED);
+    SetLayeredWindowAttributes(hwnd, 0, (1 * 1) / 1, LWA_ALPHA);
+}
 int main()       
 {
-    ::ShowWindow(::GetConsoleWindow(), SW_HIDE);
+    Baslik();
+
     while (i < 1) {  // while döngüsü sürekli olarak kalması için
         Crosshair(); /// void verdiğimiz crosshairın kısmı
         if (GetAsyncKeyState(VK_END))
@@ -72,3 +94,4 @@ int main()
         }
     }
 }
+
